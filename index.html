@@ -14,7 +14,17 @@
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <style>
-            body, #page {
+            #background-animation {
+                position: fixed;
+                inset: 0;
+                z-index: -1;
+                background-color: white;
+                display: block;
+                pointer-events: none;
+                width: 100%;
+                height: 100%;
+            }
+            body {
                 background-color: rgb(18, 18, 18);
             }
             h2 {
@@ -26,6 +36,7 @@
             }
             h1, h2 {
                 color: gold;
+                text-shadow: 0 6px 12px rgba(251, 215, 1, 0.8);
             }
             h1 {
                 font-family: 'Courier New', Courier, monospace;
@@ -34,6 +45,18 @@
             #page {
                 min-width: min-content;
             }
+            #about {
+                background-color: rgba(18, 18, 18, 0.5);
+                padding: 1em;
+                border-radius: 20px;
+                border: 4px solid white;
+                width: 60%;
+                margin-left: auto;
+                margin-right: auto;
+                backdrop-filter: blur(14px) saturate(140%);
+                -webkit-backdrop-filter: blur(14px) saturate(140%);
+            }
+
             .social-button {
                 aspect-ratio: 1 / 1;
                 height: 3em;
@@ -61,8 +84,15 @@
             .w-20 {
                 width: 20%;
             }
+            .card {
+                background-color: transparent !important;
+                border: 1px solid white;
+            }
             .card-body {
-                background-color:rgb(45, 45, 45);
+                background-color:rgba(45, 45, 45, 0.5);
+                backdrop-filter: blur(14px) saturate(140%);
+                -webkit-backdrop-filter: blur(14px) saturate(140%);
+                border-radius: inherit;
             }
             .card-title {
                 color: white;
@@ -70,23 +100,37 @@
             }
 
             @media (max-width: 800px) {
-                .biography-p {
+                #about {
                     width: 90% !important;
+                }
+                #social-container {
+                    width: 95% !important;
+                    justify-content: space-around !important;
                 }
             }
         </style>
+        <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/"
+          }
+        }
+        </script>
 </head>
 
 <body>
     <main id="page" class="w-90 mx-auto mt-4 mb-4">
         <h1 class="text-center mt-5"><b>Sam's Stuff</b></h1>
-        <h2 class="text-center mt-5">About</h2>
-        <p class="w-75 mx-auto biography-p">Hey I'm Sam and I like doing stuff online. This is my website where I put different projects that might be interesting, fun, or I just need them to be public! I just finished a MSc in computer science at the University of Lincoln, and have a particular passion for internet technologies and internet culture.</p>
-        <p class="w-75 mx-auto biography-p">I also enjoy speedrunning some of my favourite games. At one point I held the Subnautica Any% world record in <a target="_blank" href="https://www.speedrun.com/subnautica/runs/y8vekvnz">Survival Glitched</a>, <a target="_blank" href="https://www.speedrun.com/subnautica/runs/zgxnx6em">Survival Glitchless</a>, and <a target="_blank" href="https://www.speedrun.com/subnautica/runs/yj1l633y">Creative Glitched</a>. I also had a top 10 run in <a target="_blank" href="https://www.speedrun.com/ori_wotw/runs/yvpg8j6y">Ori and the Will of the Wisps (No out of bounds)</a>! I am still fairly active in the <a target="_blank" href="https://discord.gg/VCySSTfaAM">Subnautica Speedrunning Discord</a>, so come and say hi!</p>
-        <p class="w-75 mx-auto biography-p">I also have an interest in tracking severe weather around the globe, such as hurricanes, tornadoes, and flooding events. I recently developed a Convolutional Neural Network (CNN) trained on NEXRAD radar data, which was able to identify tornadic signitures within radar data with fairly impressive accuracy! I hope that one day I can travel the world and see the best storms on earth in person.</p>
-        <p class="w-75 mx-auto biography-p">I've been a fan of e-sports since I watched my first League of Legends world championship, and haven't been able to escape since. I still follow the professional scene in League of Legends, and enjoy watching the occasional CS Major or R6 invitational. I <i>love</i> hot-takes so if you got any then shoot me a DM on Discord! Also a long suffering Tottenham Hotspur fan, so there's no need to send me a DM about that, I've heard them all :&#41;. If you're a fellow sufferer you have my sympathies and condolences.</p>
+        <div id="about" class="mt-5">
+            <h2 class="text-center">About</h2>
+            <p class="w-75 mx-auto">Hey I'm Sam and I like doing stuff online! This is my website where I share projects that might be interesting, or that I just need a public link to. I have a first-class undergraduate degree in Computing & IT from the Open University, and a distinction at Master's in Computer Science from the University of Lincoln! I have a particular passion for internet technologies and weather related machine learning.</p>
+            <p class="w-75 mx-auto">I also enjoy speedrunning some of my favourite games. At one point I held the Subnautica Any% world record in <a target="_blank" href="https://www.speedrun.com/subnautica/runs/y8vekvnz">Survival Glitched</a>, <a target="_blank" href="https://www.speedrun.com/subnautica/runs/zgxnx6em">Survival Glitchless</a>, and <a target="_blank" href="https://www.speedrun.com/subnautica/runs/yj1l633y">Creative Glitched</a>. I also had a top 10 run in <a target="_blank" href="https://www.speedrun.com/ori_wotw/runs/yvpg8j6y">Ori and the Will of the Wisps (No out of bounds)</a>! I am still fairly active in the <a target="_blank" href="https://discord.gg/VCySSTfaAM">Subnautica Speedrunning Discord</a>, so come and say hi!</p>
+            <p class="w-75 mx-auto">I also have an interest in following severe weather around the globe, such as hurricanes, tornadoes, flooding, and earthquakes. I've worked on a couple of research papers in weather-related machine learning, one of which can currently be found in a GitHub repo linked below. One day I hope to travel and see the best storms on earth.</p>
+            <p class="w-75 mx-auto">I've been a fan of e-sports since I watched my first League of Legends world championship, and haven't been able to escape since. I still follow the professional scene in League of Legends, and enjoy watching the occasional CS Major or R6 invitational.</p>
+        </div>
         <h2 class="text-center mt-5">My Links</h2>
-        <div class="d-flex justify-content-center w-50 mx-auto mt-4">
+        <div id="social-container" class="d-flex justify-content-center w-50 mx-auto mt-4">
             <a class="social-button d-flex justify-content-center" style="background-color: #1DA1F2" title="Twitter" target="_blank" href="https://twitter.com/SamCunion">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="my-auto bi bi-twitter"
                     viewBox="0 0 16 16">
@@ -153,7 +197,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Kingdom Warfare Simulator</h5>
                     <p class="card-text">Mount & Blade inspired kingdom warfare simulator made from scratch. Procedurally generates
-                        the map as a network, then simulates campaigns and warfare between each kingdom until only one prevails!</p>
+                        the map as a network, which informs the automata to make decisions according to their policy. Campaigns and warfare is simulated between each kingdom until only one prevails!</p>
                 </div>
             </a>
             <a class="card w-20 stuff-card mb-5" href="https://samcunion.github.io/spc-archive-viewer/">
@@ -188,6 +232,8 @@
             </a>
         </div>
     </main>
+    <canvas id="background-animation"></canvas>
+    <script type="module" src="/background.js"></script>
 </body>
 
 </html>
